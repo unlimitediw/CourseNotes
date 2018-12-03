@@ -50,9 +50,12 @@ aunt(X, Y) :-
 
 ### Question 7
 ```
-sibling(X, Y) :
+sibling(X, Y) :-
 	parent(Z, X),
-	parent(Z, Y).
+	parent(Z, Y),
+	different(X, Y).
+different(X, Y) :-
+	not (X==Y).
 ```
 * X,Y, Z-parent
 
@@ -121,3 +124,84 @@ synchronized(objectidentifier) {
    // Access shared variables and other shared resources
 }
 ```
+
+### Question11
+* new - A. a task has been created but has not yet begun its execution
+* ready - C. the task has been running, but that execution was interrupted
+* running - D. the task has a processor and its code is executing
+* blocked - B. Either a task has not been given processor time by the scheduler, or had run previously but was blocked
+* Ref: https://www.geeksforgeeks.org/lifecycle-and-states-of-a-thread-in-java/
+
+### Question12
+```
+brother(S, B) :-
+	parent(Z, S),
+
+	parent(Z, B),
+
+	male(S),
+
+	different(S, B).
+
+different(S, B) :-
+
+	not (X==Y).
+```
+* EXP: Z-parent
+
+### Question13
+```
+child(C, P) :-
+	parent(P, C).
+```
+
+### Question14
+```
+grandmother(G, P) :-
+	female(G),
+	parent(G, Z),
+	parent(Z, P).
+```
+
+### Question15
+```
+grandfather(G, P) :-
+	male(G),
+	parent(G, Z),
+	parent(Z, P).
+```
+
+### Question16
+```
+ancestor(A, P) :-
+	parent(A, P).
+
+ancestor(A, P) :-
+	parent(A, Z),
+	ancestor(Z, P).
+```
+* Ref: lp ppt p29
+
+### Question17
+```
+daughter(C, P) :-
+	parent(P, C),
+	female(C).
+```
+
+### Question18
+```
+mother(M, C) :-
+	parent(M, C),
+	female(M).
+```
+
+### Question19
+a. start
+* Ref: https://stackoverflow.com/questions/7144018/thread-scheduler-registration
+
+### Question20
+c. notify()
+* Exp: will wake up it instead
+
+### Question21
