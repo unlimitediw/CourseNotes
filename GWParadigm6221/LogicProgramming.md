@@ -89,5 +89,28 @@
       X is female and
       X and Y are not the same person
   ```
+### Recursive Rule Definition
+* Fib
+```
+fib(0,1)
+fib(1,1)
+fib(2,1)
+fib(N,R) :-
+  N > 2,
+  N1(N-1),
+  N2(N-2),
+  fib(N1,R1),
+  fib(N2,R2),
+  R(R1+R2)
+```
 
-  
+* Factorial
+```
+fat(0,1)
+fat(1,1)
+fat(2,2)
+fat(N,R) :-
+  N>1,
+  N1(N-1),
+  fat(N1,R1),
+  R(N*R1),
