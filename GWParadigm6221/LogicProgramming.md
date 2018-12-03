@@ -114,3 +114,18 @@ fat(N,R) :-
   N1(N-1),
   fat(N1,R1),
   R(N*R1),
+```
+### Deficiencies of Prolog
+  * Resolution order control
+    * In a pure logic programming env, the order of attempted matches is nondeterminstic and all matches would be attempted concurrently
+  * The closed-world assumption
+    * The only knowledge is what is in the database
+  * The negation problem
+    * Anything not stated in the database s assumed to be false 
+  * Intrinsic limitations
+    * It is easy to state a sort process in logic, but difficult to actually do
+    
+### Application
+* Relational database management systems
+* Expert systems
+* NLP
