@@ -75,7 +75,7 @@
 * Some Examples:
   * "left_hand_side :- right_hand_side" -> "left_hand_side if right_hand_side"
   * mother(X, Y) :- parent(X, Y), female(X)
-  '''
+  ```
   sister( X, Y) :-
       parent( Z, X),
       parent( Z, Y),
@@ -88,6 +88,6 @@
       Z is a parent of Y and
       X is female and
       X and Y are not the same person
-  '''
+  ```
 
   
