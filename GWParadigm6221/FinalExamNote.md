@@ -92,9 +92,9 @@ public class ThreadLearning {
 ```
 
 ### Question 9
-b.
+a.
 ```
-Thread t = new Thread(X); t.start();
+X run = new X(); Thread t = new Thread(run); t.start();
 ```
 
 * Exp:
