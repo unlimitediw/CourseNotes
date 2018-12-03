@@ -81,4 +81,51 @@ public class Demo {
  }
 }
 ```
+* Implementing Runnable interface:
+```
+class MyClass implements Runnable {
+ // In IDEA, click Generate -> Override Method -> run():void to generate the run()
+ public void run() {
+  for(int i = 0; i < 10; i++){
+   System.out.println(Threading.currentThread().getID() + "Value " + i)
+  }
+  // Set the running time concurrency
+  try{
+   Thread.sleep(1000);
+  } catch (InterruptedException e) {
+   e.printStackTrace();
+  }
+ }
+}
 
+public class Demo {
+ public static void main(String[] args) {
+  Thread t1 = new Thread(new MyClass());
+  Thread t2 = new Thread(new MyClass());
+  t1.start();
+  t2.start();
+ }
+}
+```
+* For a single Thread:
+```
+public class Demo {
+ public static void main(String[] args) {
+  Thread t1 = new Thread(new Runnable() {
+    public void run() {
+     for(int i = 0; i < 10; i++){
+      System.out.println(Threading.currentThread().getID() + "Value " + i)
+     }
+     // Set the running time concurrency
+     try{
+      Thread.sleep(1000);
+     } catch (InterruptedException e) {
+      e.printStackTrace();
+     }
+    }
+  }
+ });
+ 
+ t1.start();
+}
+```
