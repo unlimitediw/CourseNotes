@@ -4,6 +4,7 @@ Java Threads:
 2. [Create Java Threads](#create)
 3. [Thread.join() Method and Synchronized](#join)
 
+* [The Java multithreading tutorial](https://www.tutorialspoint.com/java/java_multithreading.htm)
 
 <a name="introduction"></a>
 > Introduction to Java Threads
