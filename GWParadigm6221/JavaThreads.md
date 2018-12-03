@@ -2,7 +2,7 @@
 Java Threads:
 1. [Java Threads Introduction](#introduction)
 2. [Create Java Threads](#create)
-3. [Introduction to Amazon Simple Storage Service](#s3)
+3. [Thread.join() Method](#join)
 4. [Introduction to Amazon Redshift](#redshift)
 5. [Intro to Amazon Machine Learning](#introml)
 6. [Build a Machine Learning Model](#buildml)
@@ -123,9 +123,63 @@ public class Demo {
       e.printStackTrace();
      }
     }
-  }
- });
+   }
+  });
+  t1.start();
+ }
+}
+```
+<a name="join"></a>
+> Java Thread.join() Method
+[Back to Menu](#menu)
+
+* Without and with join():
+```
+public class Demo {
+ private static int count = 0;
+ // Use the synchronized method here
+ public staitc synchronized void inccount(){
+  count++;
+ }
+ public static void main(String[] args) {
+  Thread t1 = new Thread(new Runnable() {
+   public void run() {
+    for(int i = 0; i < 10000; i++){
+     //count++;
+     inccount();
+    }
+   }  
+  });
  
- t1.start();
+  Thread t1 = new Thread(new Runnable() {
+   public void run() {
+    for(int i = 0; i < 10000; i++){
+     //count++;
+     inccount();
+    }
+   }
+  });
+ 
+  t1.start();
+  t2.start();
+  boolean withJoin = true;
+  if (withJoin){
+   try{
+    //Java Thread join method can be used to pause the current thread execution until unless thread is dead
+    t1.join();
+    t2.join();
+   } catch (InterruptedException e) {
+    e.printStackTrace();
+   }
+  }
+  // Sout will not wait for t1 and t2 end and print 87 this place.
+  // If with Thread.join(), print 11428
+  // But why not 20,000? Both Thread t1 and t2 try to access count and some of it will be overlap and only one can access it.
+  // Use Synchronize now! The result become 20,000 now.
+  // The Synchronize let the lock of access variable be only accessed by one thread at a time.
+  System.out.println(count);
+  
+
+ }
 }
 ```
