@@ -2,13 +2,8 @@
 Java Threads:
 1. [Java Threads Introduction](#introduction)
 2. [Create Java Threads](#create)
-3. [Thread.join() Method](#join)
-4. [Introduction to Amazon Redshift](#redshift)
-5. [Intro to Amazon Machine Learning](#introml)
-6. [Build a Machine Learning Model](#buildml)
-7. [AWS SageMaker Overview](#viewsegmaker)
-8. [AWS SageMaker](#segmaker)
-9. [Build a Serverless Real-Time Data Processing APP](#app)
+3. [Thread.join() Method and Synchronized](#join)
+
 
 <a name="introduction"></a>
 > Introduction to Java Threads
