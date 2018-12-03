@@ -40,4 +40,54 @@
   * Have two or more atomic proposition
   * Propositions are connected by operators
   
-### Clausal Form
+### Logical Operators, Quantifiers and Clausal Form
+* [Page 11-13](https://github.com/unlimitediw/CourseNotes/blob/master/GWParadigm6221/GWU%20-%20Fall2015%20-%20Logic%20Programming.pdf)
+
+### Resolution
+* Unification: finding values for variables iin propositions that allows matching process to succed
+* Instatiation: assigning temporary values to variables to allow unificatin to succeed
+* After instatiating a variable with a value, if matching fails, may need to backtrack and instantate with a different value
+
+### Proof by Contradiction and Therorem proving
+* Hypotheses: a set of pertinent propositions
+* Goal: neagtion of theorem stated as a proposition, theorem is proved by finding an inconsitency
+* Horn clause:
+  * Headed: single atomic proposition on left side
+  * Headless: empty left side
+
+### Overview of Logic Programming
+* Declarative semantics: simple
+* Programming is nonprocedural: Programs do not state now a result is to be computed but rather the form of the result
+
+> Prolog
+### Terms: Variables and Structure
+* Variable: any string of letters, digits, and underscores beginning with an uppercase letter
+* Instantiation: binding of a variable to a value, lasts only as long as it takes to satify one complete goal
+* Structue: represents atomic proposition - functor (parameter list)
+
+### Prolog Fact
+* A fact is a predicate expression that makes a declarative statement about the problem domain. Whenever a variable occurs in a Prolog expression, it is assumed to be universally quantified. Note that all Prolog sentences must end with a period.
+* Used for the hypotheses
+* Headless Horn clauses
+
+### Rules
+* Horn clause notation: ":-" -> if
+* Some Examples:
+  * "left_hand_side :- right_hand_side" -> "left_hand_side if right_hand_side"
+  * mother(X, Y) :- parent(X, Y), female(X)
+  '''
+  sister( X, Y) :-
+      parent( Z, X),
+      parent( Z, Y),
+      female( X),
+      different( X, Y).
+      different(X,Y) :- not(X == Y)
+  i.e., for all X and Y,
+      X is the sister of Y if
+      Z is a parent of X and
+      Z is a parent of Y and
+      X is female and
+      X and Y are not the same person
+  '''
+
+  
