@@ -117,7 +117,7 @@ class MyClass implements Runnable {
 ```
 
 ### Question10
-b,c,d. Two concurrent threads cannot access both balance and amt
+a. all wrong
 * Exp: 
 ```
 synchronized(objectidentifier) {
