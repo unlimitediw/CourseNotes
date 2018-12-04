@@ -117,7 +117,7 @@ class MyClass implements Runnable {
 ```
 
 ### Question10
-a. all wrong
+b, c, d.
 * Exp: 
 ```
 synchronized(objectidentifier) {
