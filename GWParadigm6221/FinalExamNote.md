@@ -60,21 +60,21 @@ different(X, Y) :-
 * X,Y, Z-parent
 
 ### Question 8
-c. 
-```
-class Thread1 implements Runnable {
+a. 
+```		
+class Thread1 extends Thread {
   public void run() {}}
 ```
 * Exp:
 ```
-class MyClass implements Runnable {
+class MyClass extends Thread {
     @Override
     public void run() {
         for(int i = 0; i < 10; i++){
             System.out.println(Thread.currentThread().getId() + " value " + i);
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1);
         }catch (InterruptedException e){
             e.printStackTrace();
         }
@@ -83,10 +83,10 @@ class MyClass implements Runnable {
 
 public class ThreadLearning {
     public static void main(String[] args) {
-        Thread t1 = new Thread(new MyClass());
-        Thread t2 = new Thread(new MyClass());
-        t1.start();
-        t2.start();
+        MyClass myClass = new MyClass();
+        MyClass myClass1 = new MyClass();
+        myClass.start();
+        myClass1.start();
     }
 }
 ```
@@ -205,3 +205,23 @@ c. notify()
 * Exp: will wake up it instead
 
 ### Question21
+```
+sealed abstract class Component(grade: Int)
+
+case class Quiz (grade:Int) extends Component(grade){
+    var quizGrade:Int = grade
+}
+
+def quizMean(l : List[Quiz]):Double = {
+    var sumVal:Int = 0
+    for(x <- l){
+        sumVal += x.quizGrade
+    }
+    var result:Double = sumVal / l.length
+    return result
+}
+
+val quizzes = List(Quiz(10), Quiz(20), Quiz(30))
+
+println(quizMean(quizzes))
+```
