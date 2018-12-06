@@ -17,4 +17,51 @@
   * P1 = ...
 
 ### Fully Connected Layer
-*
+* For 4D Tensor (H x W x DEPTH x N)
+  * D = Heigth x Weight x Depth
+  * N: Batch Size (Number of images on batch)
+  * M: Number of Outputs (hidden nerons)
+* Forward Propagation:
+  * The input will be reshaped to (N,D) then dot product with (D,M)
+  * D is just like features and H x W is the pixel
+* BackPropagation:
+  * All gradients have the same dimension as it's original inputs
+  * regression problem is the same, but outputlayer_delta is z rather than a, other things are all same as classification problem.
+  
+### Relu Layer (Rectified-Linear unit Layer)
+* Use this layer at the output of any linear layer (e.g FC layers or CONV layers)
+* Backward:
+  1. Get a mask of all elements on the input bigger than zero
+  2. Multiply by dout, dx = dout * (x > 0)
+* Activation layer is used to make the model non-linear
+  
+### Dropout Layer
+* Input: Anyshape
+* Parameters:
+  * p: Dropout probability
+  * mask: Neurons selected
+  * seed: Control random function
+* Use on fully connected layers or max-pooling layers (noise augmentation)
+* multiply mask on both forward and backword
+
+### Convolution Layer
+* Parameters:
+  * N - Batch size (number of images on the 4d tensor)
+  * F - number of filters on the convolution layer 
+  * kW/kH: Kernel Width/Height (Normally we use squareimages, so kW = kH
+  * H/W: Image height/width (Normally H=W)
+  * H'/W': Convolved image height/width (Remains the same as input if proper padding is used)
+  * Stide: Number of pixels that the convolution sliding window will travel
+  * Padding: Zeros added to the border of the image to keep the input and output size the same
+  * Depth: Volume input depth (ie if the input is a RGB image depth will be 3)
+  * Output depth: Volume output depth (same as F)
+* On the forward propagation each filter will look something different on the image (convolve each input depth with a different filter)
+* Back-propagation:
+  * Thinking in 1d, the result is same as 2d.
+  * [The position of X will not change, w window will shift. Each time window will generate a new value and shift one unit position](https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/convolution_layer.html)
+  1. dx must have the same size of X, so we need padding.
+  2. dout must have the same size of Y
+  3. To save programming effort we want to calculate the gradient as a convolution
+  4. On dX gradient all elements are been multiplied by W so we're probably convolving W and dout
+  
+  
