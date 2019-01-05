@@ -1,0 +1,4 @@
+ReadMe:
+ReadMe will also be used to test, please set the Readme.txt and rubyTest.ruby in the same directory.
+Run ruby rubyTest.ruby on command line.
+Thanks!
