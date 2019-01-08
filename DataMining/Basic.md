@@ -51,5 +51,14 @@ Topics:
   * Frequency - counts
   * Center - mean
   * Spread - standard deviation
-  
-  
+* Frequency and Mode
+  * Frequency measures how often the value occurs in the data set
+  * The mode of an attribute is the most frequent attribute value
+  * Percentiles: count the number smaller than one point over total se
+* Center and Spread
+  * Center: mean(scale) and median(more commonly used) and their difference
+  * Spread: Range and Variance(standard deviation, but sensitive to outliers)
+* Representation
+  * The mapping of information to a visual format
+  * Data objects, their attributes and the relationships among data objects are translated into graphical elements such as points, lines, shapes and colors
+  * Histogram(1d,2d), Box plots, Scatter plots and Contour plots(used for continuous attributes on a spatial grid).
