@@ -22,5 +22,5 @@
     file: describe file type
     find: search for files in a directory hierarchy
     whereis: locate source files and binaries
-    
+    ifconfig: same as ipconfig in windows
     
