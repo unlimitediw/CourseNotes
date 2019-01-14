@@ -49,4 +49,6 @@
     * Ssize(ri,rj) = 1 - (size(ri) + size(rj))/size(im)
     * Sfill(ri,rj) = 1 - (size(BBij) - size(ri) - size(rj))/size(im) where BB is the bounding box
   * Complementary starting regions: [Efficient Graph Based Image Segmentation](http://people.cs.uchicago.edu/~pff/papers/seg-ijcv.pdf)
-  
+
+* Combining Locations
+ * Order the combined object hypotheses set with randomness.
