@@ -50,5 +50,9 @@
     * Sfill(ri,rj) = 1 - (size(BBij) - size(ri) - size(rj))/size(im) where BB is the bounding box
   * Complementary starting regions: [Efficient Graph Based Image Segmentation](http://people.cs.uchicago.edu/~pff/papers/seg-ijcv.pdf)
 
-* Combining Locations
- * Order the combined object hypotheses set with randomness.
+* Combining Locations: Order the combined object hypotheses set with randomness.
+
+> Object Recognition using Selective Search
+
+* Two types of features: Histograms of oriented gradient(HOG) and bage-of-words(employ colour-SIFT descriptors and finer spartial pyramid division).
+* SIFT(Scale-invarient feature transform)
