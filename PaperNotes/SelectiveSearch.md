@@ -41,3 +41,12 @@
       
     Extract object location boxes L from all regions in R
     
+* Diversify search by:
+  * Complementary colour space (single color space in this paper)
+  * Complementary similarity measures sij = w1Scolour + w2Stexture + w3Size + w4Sfill
+    * Scolour(ri,rj) = sum(min(cik,cjk)) for k in a colour histogram C (size is about 75, propagateable).
+    * Stexture(ri,rj) = sum(min(tik,tij)) also texture histgram T (about 240).
+    * Ssize(ri,rj) = 1 - (size(ri) + size(rj))/size(im)
+    * Sfill(ri,rj) = 1 - (size(BBij) - size(ri) - size(rj))/size(im) where BB is the bounding box
+  * Complementary starting regions: [Efficient Graph Based Image Segmentation](http://people.cs.uchicago.edu/~pff/papers/seg-ijcv.pdf)
+  
