@@ -1,1 +1,14 @@
+[Link](https://arxiv.org/pdf/1311.2524.pdf)
 
+> What it wants to do
+
+* To what extent do the CNN classification results on ImageNet generalize to object detection results on the PASCAL VOC Challenge.
+* Challenge 1: units high up makes precise localization within the sliding window paradigm an open technical challenge. Solution:"Recognize using region"
+* Challenge 2: labeled data is scarce and the amount currently available is insufficient for training a large CNN. Solution: use unsupervised pretraining followed by supervised fine-tuning.
+
+> Object detection with R-CNN
+
+* Three modules: 
+  * generate category-independent region proposals(define the set of candidate detections available to the detector) - [selective search](https://ivi.fnwi.uva.nl/isis/publications/2013/UijlingsIJCV2013/UijlingsIJCV2013.pdf)
+  * a large CNN that extracts a fixed-length feature vector from each region
+  * a set of class specific linear SVMs
