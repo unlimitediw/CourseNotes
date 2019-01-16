@@ -39,4 +39,9 @@
   * Consists of several software modules
 * Combination of DBMS and database is called database system.
 
+> VPC
 
+> Data Model
+
+* A conceptual data model provides a hgih-level description of the data items with their characteristics and relationships
+  * 123
