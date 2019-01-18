@@ -19,7 +19,7 @@
 * A documemnt is a collection of nodes
 * ELement nodes: elements such as `<body>`, `<p>` and `<ul>` are the basic building blocks of documents on the web.
 * Text nodes: in XHTML, text nodes are always enclosed within elment nodes as content.
-* Attribute nodes: Attributes are used to give more specific information about an element. e.g - `<p title="a gentle reminder>~</p>`
+* Attribute nodes: Attributes are used to give more specific information about an element. e.g - `<p title="a gentle reminder>...</p>`
 
 > Cascading Style Sheets
 
@@ -30,3 +30,9 @@
     <style>.special{color:green;font-style:italic;}</style>
     ...
     <li class="special">Bean</li>
+
+* The ID attribute: it can be used `once` in a web page to uniquely identify an element.
+#
+    <style>#purchases{border:1px solid white;background-color:#333;color:#ccc;padding:1em;}</style>
+    ...
+    <ul id="purchases">...</ul>
