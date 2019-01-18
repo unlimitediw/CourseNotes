@@ -20,3 +20,13 @@
 * ELement nodes: elements such as `<body>`, `<p>` and `<ul>` are the basic building blocks of documents on the web.
 * Text nodes: in XHTML, text nodes are always enclosed within elment nodes as content.
 * Attribute nodes: Attributes are used to give more specific information about an element. e.g - `<p title="a gentle reminder>~</p>`
+
+> Cascading Style Sheets
+
+* it should be declared in `<head>` with `<style>`.
+* e.g `<style>body{color:white;background-color:black;}</style>`
+* The class attribute: it can be applied as often and many different elements as you like. "." is the syntax for class, you can also add "h1", "h2" or sth else ahead to specify the area.
+#
+    <style>.special{color:green;font-style:italic;}</style>
+    ...
+    <li class="special">Bean</li>
