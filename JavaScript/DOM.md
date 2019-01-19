@@ -45,5 +45,5 @@
 
 > Getting and Setting Attributes
 
-* getAttribute
-
+* getAttribute(a)
+* setAttribute(a,b)
