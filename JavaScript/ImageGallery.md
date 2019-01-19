@@ -20,3 +20,10 @@
             </ul>
         </body>
         </html>
+
+* To hold the image in same page and list
+  * Put a placeholder image on the same page as the list
+  * When the user clicks a link, intercept the default behaviour
+  * Replace the place holder image with the image from the link.
+
+* then use js setAttribute
