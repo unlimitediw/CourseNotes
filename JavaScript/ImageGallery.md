@@ -37,3 +37,24 @@
     }
     
     onclick="showPic(this);return false;" <!-add to each button you want-->
+
+* childNodes: this property give us information about the children of any elment in a document's node tree
+  * It return an array of children.
+  
+* nodeType
+  * Element nodes - 1
+  * Attribute nodes - 2
+  * Text nodes - 3
+
+* Update Version
+#
+    function showPic(pic){
+        var source = pic.getAttribute("href");
+        var placeholder = document.getElementById("placeholder");
+        placeholder.setAttribute("src",source);
+        var text = pic.getAttribute("title");
+        var description = document.getElementById("description");
+        description.firstChild.nodeValue = text;
+    }
+
+
