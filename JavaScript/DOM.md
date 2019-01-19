@@ -36,3 +36,14 @@
     <style>#purchases{border:1px solid white;background-color:#333;color:#ccc;padding:1em;}</style>
     ...
     <ul id="purchases">...</ul>
+    
+> Getting Elements
+
+* getElementById
+* getElementsByTagName
+* getElementsByClassName
+
+> Getting and Setting Attributes
+
+* getAttribute
+
