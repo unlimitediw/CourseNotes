@@ -27,3 +27,13 @@
   * Replace the place holder image with the image from the link.
 
 * then use js setAttribute
+
+* showPic
+#
+    function showPic(pic){
+        var source = pic.getAttribute("href");
+        var placeholder = document.getElementById("placeholder");
+        placeholder.setAttribute("src",source);
+    }
+    
+    onclick="showPic(this);return false;" <!-add to each button you want-->
