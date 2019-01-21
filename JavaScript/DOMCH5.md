@@ -8,7 +8,7 @@
 
 * Reference in HTML: <a href="http://www.example.com/" onclick="popUp(this.href);return false;">Example</a>
 * Function in JS:
-
-`function popUp(winURL){
-  window.open(winURL,"popup","width=320,height=480");
-}`
+#
+    function popUp(winURL){
+      window.open(winURL,"popup","width=320,height=480");
+    }
