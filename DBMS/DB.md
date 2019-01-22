@@ -135,3 +135,13 @@
 * Syntactical rules specify how the data should be represented and stored.
 * Semantical rules focus on the semantical corretness or meaning of the data
 * Integrity rules are specified as part of the conceptual/logical data model and stored in the catalog
+
+> Concurrency Control
+* DBMS has built in facilities to support concurrent or parallel execution of database programs.
+* Database transaction: sequence of read/write operations considered to be an atomic unit in the sense that either all operations are executed or none at all.
+* Read/write operations can be executed at the same time by the DBMS
+* DBMS should avoid inconsistencies
+* DBMS must support ACID(Atomicity, Consistency, Isolation, Durability) properties
+  * Atomicity requires that a transaction should either be executed in its entirety or not all
+  * Consistency assures that a transaction brings the database from one consistent state to another
+  * Isolation ensures that the effect of concurrent transactions should be the same as if they would have been executed in isolation
