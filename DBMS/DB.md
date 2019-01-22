@@ -96,3 +96,42 @@
 * Backup and Recovery Facilities
 * Data Security
 * Performance Utilities
+
+> Data Independence
+
+* Data independence implies that changes in data definitions have minimal to no impact on the applications.
+* Physical data independence implies that neither the applications, nor the views or logical data model must be changed when changes are made to the data storage specifications in the internal data model.
+  * DBMS should provide interfaces between logical and internal data models
+* Logical data independence implies that software applications are minimally affected by changes in the conceptual or logical data model
+  * Views in the external data model will act as a protective shield
+  * DBMS must provide interfaces between conceptual/logical and external layer
+  
+> Database Modelling
+
+* A data model is an explicit representation of the data items together with their characteristics and relationships
+* A conceptual data model should provide a formal and perfect mapping of the data requirements of the business process and is made in collaboration with the business user
+  * translated into logical and internal data model.
+* Important that a data model's assumptions and shortcomings are clearly documented
+
+> Managing Sturctured, Semi Structured and Unstructured Data
+* Structured data
+  * can be described according to a formal logical data model
+  * ability to express integrity rules and enforce correctness of data
+  * also facilitates searching, processing and analyzing the data
+
+* Unstructured data
+  * no finer grained components in a file or series of characters that can be interpreted in a meaningful way by a DBMS or application.
+  * Note: volume of unstructured data surpasses that of structured data.
+
+* Semi-structured data
+  * data which does have a certain structure, but the structure may be very irregular or highly volatile
+ 
+> Managing Data Redundancy
+* Duplication of data can be desired in distributed environments to improve data retrieval performance
+* DBMS is now responsible for the management of the redundancy by providing synchronization facilities to safeguard data consistency
+* Compared to the file approach, the DBMS guarantees correctness of the data without user intervention
+
+> Specifying Integrity Rules
+* Syntactical rules specify how the data should be represented and stored.
+* Semantical rules focus on the semantical corretness or meaning of the data
+* Integrity rules are specified as part of the conceptual/logical data model and stored in the catalog
