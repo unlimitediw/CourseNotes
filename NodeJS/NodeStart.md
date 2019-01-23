@@ -54,3 +54,16 @@
 #
     var server = require("./server");
     server.start();
+
+
+> 制作请求的路由
+
+* http + url + query
+* 编写路由router.js
+#
+    function route(pathname) {
+      console.log("About to route a request for " + pathname);
+    }
+    exports.route = route;
+
+* 在index中，
