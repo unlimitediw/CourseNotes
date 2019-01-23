@@ -30,3 +30,27 @@
   
 > 服务器是如何处理请求的
 
+* onRequest(request, response)，request和response是可以被用来处理HTTP请求细节的对象。
+* 使用response.writeHead()函数发送一个HTTP状态200和HTTP头的内容类型（content-type)并使用response.write()在HTTP相应主体中发送文本。最终调用response.end()完成相应。
+
+> 服务器模块
+
+* 把某段代码编变成模块意味着我们需要把我们希望提供功能的部分导出到请求这个模块的脚本。在此，我们将服务器脚本放入start函数，然后导出函数。
+#
+    var http = require("http");
+    function start() {
+    function onRequest(request, response) {
+      console.log("Request received.");
+      response.writeHead(200, {"Content-Type": "text/plain"});
+      response.write("Hello World");
+      response.end();
+    }
+    http.createServer(onRequest).listen(8888);
+      console.log("Server has started.");
+    }
+    exports.start = start;
+
+* 同时使用index.js调用它
+#
+    var server = require("./server");
+    server.start();
