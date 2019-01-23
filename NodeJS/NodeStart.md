@@ -92,8 +92,8 @@
     exports.start = start;
 
 * 在index中，将router对象传递到server中，server随后可以调用这个route函数，但实际不需要这些名词，这是个动作行为，只需要调用就行了。
-* 设计一个requestHandler让路由有路可循。
-* requestHandler.js
+* 设计一个requestHandlers让路由有路可循。
+* requestHandlers.js
 #
     function start() {
         console.log("Request handler 'start' was called.");
@@ -101,8 +101,8 @@
     function upload() {
         console.log("Request handler 'upload' was called.");
     }
-exports.start = start;
-exports.upload = upload;
+    exports.start = start;
+    exports.upload = upload;
 * index.js
 #
     var server = require("./server");
@@ -114,3 +114,6 @@ exports.upload = upload;
     handle["/start"] = requestHandlers.start;
     handle["/upload"] = requestHandlers.upload;
     server.start(router.route,handle);
+
+> 让请求处理程序作出响应
+* 在最终的各个
