@@ -145,3 +145,22 @@
   * Atomicity requires that a transaction should either be executed in its entirety or not all
   * Consistency assures that a transaction brings the database from one consistent state to another
   * Isolation ensures that the effect of concurrent transactions should be the same as if they would have been executed in isolation
+  * Durability ensures that the databse changes made by a transaction declared can be made permanent under all circumstances.
+
+> Backup and Recovery Facilities
+* Backup and recovery facilities can be used to deal with the effect of loss of data due to hardware or network errors, or bugs in system or application software.
+* Backup facilities can either perform a full or incremental backup.
+* Recovery facilities allow to restore the data to a previous state after loss or damage occurred.
+
+> Data Security
+* Data security can be enforced by the DBMS.
+* Some users have read access, whilst others have write access to the data(role-based functionality.
+* Data access can be managed via logins and passwords assigned to users or user account.
+* Each account has its own authorization rules that can be stored in the catalog.
+
+> Performamnce Utilities
+* Three KPIs of a DBMS:
+  * response time denoting the time elapsed between issuing a database request and the successful termination thereof.
+  * throughput rate representing the transactions a DBMS can process per unit of time
+  * space utilization referring to the space utilized by the DBMS to store both raw data and metadata.
+* DBMSs come with various types of utilities aimed at improving these KPIs
