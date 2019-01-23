@@ -121,3 +121,24 @@
     请求http://localhost:8888/start,浏览器会输出“Hello Start”，
     请求http://localhost:8888/upload会输出“Hello Upload”，
     请求http://localhost:8888/foo 会输出“404 Not found”。
+
+> 阻塞与非阻塞
+* requestHandlers, 加入阻塞，10秒后方返回
+#
+    function start() {
+	console.log("Request handler 'start' was called.");
+	function sleep(milliSeconds){
+		var startTime = new Date().getTime();
+		while(new Date().getTime()<startTime + milliSeconds);
+	}
+	sleep(10000);
+	return "Go Start!";
+    }
+    function upload() {
+        console.log("Request handler 'upload' was called.");
+        return "Go Upload";
+    }
+    exports.start = start;
+    exports.upload = upload;
+    
+* 先运行http://localhost:8888/start 再
