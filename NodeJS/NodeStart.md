@@ -61,10 +61,35 @@
 * http + url + query
 * 编写路由router.js
 #
-    function route(pathname) {
-      console.log("About to route a request for " + pathname);
+    function route(handle,pathname) {
+        console.log("About to route a request for " + pathname);
+        if(typeof handle[pathname] === 'function'){
+            handle[pathname]();
+        }else{
+            console.log("No request handler found for " + pathname);
+        }
     }
     exports.route = route;
+* server.js
+#
+    var http = require("http");
+    var url = require("url");
+
+    function start(route,handle) {
+        function onRequest(request, response) {
+            var pathname = url.parse(request.url).pathname;
+            console.log("Request for " + pathname + " received.");
+
+            route(handle,pathname);
+
+            response.writeHead(200, {"Content-Type": "text/plain"});
+            response.write("Hello World");
+            response.end();
+        }
+        http.createServer(onRequest).listen(8888);
+            console.log("Server has started.");
+    }
+    exports.start = start;
 
 * 在index中，将router对象传递到server中，server随后可以调用这个route函数，但实际不需要这些名词，这是个动作行为，只需要调用就行了。
 * 设计一个requestHandler让路由有路可循。
