@@ -116,4 +116,8 @@
     server.start(router.route,handle);
 
 > 让请求处理程序作出响应
-* 在最终的各个
+* 在最终的各个函数加入return，令：
+#
+    请求http://localhost:8888/start,浏览器会输出“Hello Start”，
+    请求http://localhost:8888/upload会输出“Hello Upload”，
+    请求http://localhost:8888/foo 会输出“404 Not found”。
