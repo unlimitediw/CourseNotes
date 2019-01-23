@@ -141,4 +141,6 @@
     exports.start = start;
     exports.upload = upload;
     
-* 先运行http://localhost:8888/start 再
+* 先运行http://localhost:8888/start 再运行http://localhost:8888/upload 发现upload需要等待start运行完毕。
+* ”再node中除了代码，所有一切都是并行执行的“ 即，Node.js可以再不新增额外线程的情况下，依然可以对任务进行并行处理，它通过event loop来实现并行操作，我们可以利用这一点，尽量避免阻塞操作。
+* 为了使用非阻塞操作，我们需要使用`回调`，将函数作为参数传递给其它需要花时间做处理的函数。
