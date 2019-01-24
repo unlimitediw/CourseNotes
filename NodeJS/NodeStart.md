@@ -287,32 +287,96 @@ exports.route = route;
 
 > 上传文件
 
-* 使用formidable
+* 使用formidable, server
 #
-	var formidable = require('formidable'),
-		http = require('http'),
-		util = require('util');
-
-	http.createServer(function(req,res){
-		if (req.url == '/upload' && req.method.toLowerCase() == 'post'){
-			//parse a file upload
-			var form = new formidable.IncomingForm();
-			form.parse(req,function(err,fields,files){
-				res.writeHead(200,{'content-type':'text/plain'});
-				res.write("received upload:\n\n");
-				res.end(util.inspect({fields:fields,files,files}));
-			});
-			return
+	var http = require("http");
+	var url = require("url");
+	function start(route, handle) {
+	function onRequest(request, response) {
+	var pathname = url.parse(request.url).pathname;
+	console.log("Request for " + pathname + " received.");
+	route(handle, pathname, response, request);
+	}
+	http.createServer(onRequest).listen(8888);
+	console.log("Server has started.");
+	}
+	exports.start = start;
+* index
+#
+	var server = require("./server");
+	var router = require("./router");
+	var requestHandlers = require("./requestHandlers");
+	var handle = {}
+	handle["/"] = requestHandlers.start;
+	handle["/start"] = requestHandlers.start;
+	handle["/upload"] = requestHandlers.upload;
+	handle["/show"] = requestHandlers.show;
+	server.start(router.route, handle);
+* router
+#
+	function route(handle, pathname, response, request) {
+		console.log("About to route a request for " + pathname);
+		if (typeof handle[pathname] === 'function') {
+			handle[pathname](response, request);
+		} else {
+			console.log("No request handler found for " + pathname);
+			response.writeHead(404, {"Content-Type": "text/html"});
+			response.write("404 Not found");
+			response.end();
 		}
-
-		// show a file upload form
-		res.writeHead(200, {'content-type': 'text/html'});
-		res.end(
-		'<form action="/upload" enctype="multipart/form-data" '+
-		'method="post">'+
-		'<input type="text" name="title"><br>'+
-		'<input type="file" name="upload" multiple="multiple"><br>'+
-		'<input type="submit" value="Upload">'+
-		'</form>'
-		);
-	}).listen(9999);
+	}
+	exports.route = route;
+* requestHandlers
+#
+	var querystring = require("querystring"),
+	fs = require("fs"),
+	formidable = require("formidable");
+	function start(response) {
+		console.log("Request handler 'start' was called.");
+		var body = '<html>'+
+			'<head>'+
+			'<meta http-equiv="Content-Type" content="text/html; '+
+			'charset=UTF-8" />'+
+			'</head>'+
+			'<body>'+
+			'<form action="/upload" enctype="multipart/form-data" '+
+			'method="post">'+
+			'<input type="file" name="upload" multiple="multiple">'+
+			'<input type="submit" value="Upload file" />'+
+			'</form>'+
+			'</body>'+
+			'</html>';
+		response.writeHead(200, {"Content-Type": "text/html"});
+		response.write(body);
+		response.end();
+	}
+	function upload(response, request) {
+		console.log("Request handler 'upload' was called.");
+		var form = new formidable.IncomingForm();
+		console.log("about to parse");
+		form.parse(request, function(error, fields, files) {
+			console.log("parsing done");
+			fs.renameSync(files.upload.path, "/Users/unlimitediw/Downloads/NodeJS/start/uploadFile/tmp/test.png");
+			response.writeHead(200, {"Content-Type": "text/html"});
+			response.write("received image:<br/>");
+			response.write("<img src='/show' />");
+			response.end();
+		});
+	}
+	function show(response, postData) {
+		console.log("Request handler 'show' was called.");
+		fs.readFile("/Users/unlimitediw/Downloads/NodeJS/start/uploadFile/tmp/test.png", "binary", function(error, file) {
+			if(error) {
+				response.writeHead(500, {"Content-Type": "text/plain"});
+				response.write(error + "\n");
+				response.end();
+			} else {
+				response.writeHead(200, {"Content-Type": "image/png"});
+				response.write(file, "binary");
+				response.end();
+			}
+		});
+	}
+	exports.start = start;
+	exports.upload = upload;
+	exports.show = show;
