@@ -209,3 +209,78 @@ exports.route = route;
 
 > 处理POST请求
 
+* server
+#
+	var http = require("http");
+	var url = require("url");
+
+	function start(route, handle){
+		function onRequest(request, response){
+			var postData = "";
+			var pathname = url.parse(request.url).pathname;
+			console.log("Request for " + pathname + " received.");
+			//POST小块
+			request.setEncoding("utf8");
+
+			request.addListener("data",function(postDataChunk){
+				postData += postDataChunk;
+				console.log("received POST data chunk " + postDataChunk + ".");
+			});
+
+			request.addListener("end",function(){		
+				//新增第三个参数response
+				route(handle, pathname, response,postData);
+			});
+		}
+		http.createServer(onRequest).listen(8888);
+		console.log("Server has started.")
+	}
+
+	exports.start = start;
+
+* router
+#
+	function route(handle, pathname, response,postData){
+		console.log("About to route a request for " + pathname);
+		if(typeof handle[pathname] === 'function'){
+			handle[pathname](response,postData);
+		}else{
+			console.log("No request handler found for " + pathname);
+			response.writeHead(404, {"Content-Type": "text/plain"});
+			response.write("不是404 not found");
+			response.end();
+		}
+	}
+	exports.route = route;
+* requestHandler
+#
+	var querystring = require("querystring");
+
+	function start(response,postData){
+		console.log("Request handler 'start' was called.");
+		var body = '<html>'+
+			'<head>'+
+			'<meta http-equiv="Content-Type" content="text/html; '+
+			'charset=UTF-8" />'+
+			'</head>'+
+			'<body>'+
+			'<form action="/upload" method="post">'+
+			'<textarea name="text" rows="20" cols="60"></textarea>'+
+			'<input type="submit" value="Submit text" />'+
+			'</form>'+
+			'</body>'+
+			'</html>';
+		response.writeHead(200, {"Content-Type": "text/html"});
+		response.write(body);
+		response.end();
+	}
+
+	function upload(response,postData){
+		console.log("Request handler 'upload' was called.");
+		response.writeHead(200, {"Content-Type":"text/plain"});
+		response.write("You sent" + querystring.parse(postData).text);
+		response.end();
+	}
+
+	exports.start = start;
+	exports.upload = upload;
