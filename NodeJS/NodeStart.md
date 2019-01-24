@@ -144,3 +144,65 @@
 * 先运行http://localhost:8888/start 再运行http://localhost:8888/upload 发现upload需要等待start运行完毕。
 * ”再node中除了代码，所有一切都是并行执行的“ 即，Node.js可以再不新增额外线程的情况下，依然可以对任务进行并行处理，它通过event loop来实现并行操作，我们可以利用这一点，尽量避免阻塞操作。
 * 为了使用非阻塞操作，我们需要使用`回调`，将函数作为参数传递给其它需要花时间做处理的函数。
+
+> 以非阻塞操作进行请求响应
+
+* 现阶段： 请求处理程序(server, router, handler) -> 请求路由 -> 服务器 -> 将请求处理程序返回的内容传递给HTTP。
+* 新的实现方式：将服务器传递给内容，即将response对象通过请求路由传递给请求处理程序，处理程序根据对象上的函数进行响应。
+
+* 三处更改 1. server
+#
+	var http = require("http");
+	var url = require("url");
+
+	function start(route, handle){
+		function onRequest(request, response){
+			var pathname = url.parse(request.url).pathname;
+			console.log("Request for " + pathname + " received.");
+			//新增第三个参数response
+			route(handle, pathname, response);
+		}
+		http.createServer(onRequest).listen(8888);
+		console.log("Server has started.")
+	}
+
+	exports.start = start;
+
+* 3. router
+#
+	function route(handle, pathname, response){
+		console.log("About to route a request for " + pathname);
+		if(typeof handle[pathname] === 'function'){
+			handle[pathname](response);
+		}else{
+			console.log("No request handler found for " + pathname);
+			response.writeHead(404, {"Content-Type": "text/plain"});
+			response.write("不是404 not found");
+			response.end();
+		}
+	}
+
+exports.route = route;
+* 2. requestHandlers
+#
+	var exec = require("child_process").exec;
+
+	function start(response){
+		console.log("Request handler 'start' was called");
+		//阻塞测试
+		exec("find /",{timeout:100,maxBuffer:20000*1024}, function(error, stdout,stderr){
+			response.writeHead(200,{"Content-Type" : "text/plain"});
+			response.write(stdout);
+			response.end();
+		});
+	}
+
+	function upload(response){
+		console.log("Request handler 'upload' was called.");
+		response.writeHead(200, {"Content-Type":"text/plain"});
+		response.write("Hello Upload");
+		response.end();
+	}
+
+	exports.start = start;
+	exports.upload = upload;
