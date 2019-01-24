@@ -206,3 +206,6 @@ exports.route = route;
 
 	exports.start = start;
 	exports.upload = upload;
+
+> 处理POST请求
+
