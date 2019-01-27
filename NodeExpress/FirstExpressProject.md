@@ -23,7 +23,7 @@
 * The generated project
   * Directory structure
 #
-    /express-locallibrary-tutorial
+    /ExpressLibrary
       app.js
       /bin
           www
@@ -42,3 +42,25 @@
           error.pug
           index.pug
           layout.pug 
+  * package.json
+#
+    {
+      "name": "expresslibrary",
+      "version": "0.0.0",
+      "private": true,
+      "scripts": {
+        "start": "node ./bin/www",
+        "devstart": "nodemon ./bin/www"
+      },
+      "dependencies": {
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.9",
+        "express": "~4.16.0",
+        "http-errors": "~1.6.2",
+        "jade": "~1.11.0",
+        "morgan": "~1.9.0"
+      },
+      "devDependencies": {
+        "nodemon": "^1.18.9"
+      }
+    }
