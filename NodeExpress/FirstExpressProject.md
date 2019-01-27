@@ -12,7 +12,7 @@
 
 * Running seleton website
   * `express ExpressLibrary`
-  * `npm-install`, it will install the dependencies
+  * `npm install`, it will install the dependencies
   * `DEBUG=ExpressLibrary:* npm start`, then run the application.
 
 * Enable server restart on file changes
@@ -111,3 +111,38 @@
 * Views(templates)
   * `Response.render()` is used to render a specified template along with the values of named variables passed in an object, and then send the result as a response.
   * In the example, `title` variable is inserted where specified in the template.
+
+> Using a Database(with Mongoose)
+
+* MongoDB: A NoSQL database which uses JSON-like documents with schemata.
+* Mongoose acts as a front end to MongoDB.
+* Install Mongoose and MongoDB
+  * `npm install mongoose`
+* Connecting to MongoDB
+#
+    //Import the mongoose module
+    var mongoose = require('mongoose');
+
+    //Set up default mongoose connection
+    var mongoDB = 'database url';
+    mongoose.connect(mongoDB,{ useNewUrlParser: true });
+    // Get Mongoose to use the global promise library
+    mongoose.Promise = global.Promise;
+    //Get the default connection
+    var db = mongoose.connection;
+
+    //Bind connection to error event (to get notification of connection errors)
+    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+* Defing Schemas
+#
+    //Require Mongoose
+    var mongoose = require('mongoose');
+
+    //Define a schema
+    var Schema = mongoose.Schema;
+
+    var SomeModelSchema = new Schema({
+      a_string: String,
+      a_date: Date
+    });
