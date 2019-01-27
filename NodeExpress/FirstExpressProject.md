@@ -134,7 +134,7 @@
     //Bind connection to error event (to get notification of connection errors)
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-* Defing Schemas
+* Defing Schemas and creating a model
 #
     //Require Mongoose
     var mongoose = require('mongoose');
@@ -146,3 +146,11 @@
       a_string: String,
       a_date: Date
     });
+    // Compile model from schema
+    var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
+    
+* Schema types(fields)
+  * A schema can have an arbitrary number of fields - each one represents a field in the documents stored in MongoDB.
+  
+  
+    
