@@ -38,9 +38,9 @@
           index.js
           users.js
       /views
-          error.pug
-          index.pug
-          layout.pug 
+          error.jade
+          index.jade
+          layout.jade
   * package.json
 #
     {
@@ -76,3 +76,38 @@
   * require() 
     * `express, path, serve-favicon, morgan and cookie-parser`
     * `routes/index and routes/users`
+  * set views value to specify the folder where the templates will be stored
+    * `app.set('views', path.join(__dirname, 'views'));
+    * `app.set('view engine', 'jade');
+  * use app.use() to add the middleware libraries into request handling chain
+    * `app.use(logger('dev'))`
+    * `app.use(express.json())`
+    * `app.use(express.urlencoded({extended:false}))`
+    * `app.use(cookieParser())`
+    * `app.use(express.static(path.join(__dirname,'public')))
+  * add route-handling code to request handling chain
+    * `app.use('/',indexRouter)`
+    * `app.use('/users',userRouter)`
+    * `/ and /users` are treated as a prefix to routes defiend in the imported files.
+  * also need to add HTTP 404 and error response by app.use()
+  * Finally exports the application object by `module.exports = app;`.
+
+* Routes
+  * index.js and users.js are similar
+  * First it loads the xpress module and uses it to get an express.Router object.
+  * Then it specifies a route on that object and lastly exports the router from the module.
+  * test it by run `http://localhost:3000/users/`
+#
+    var express = require('express');
+    var router = express.Router();
+
+    /* GET users listing. */
+    router.get('/', function(req, res, next) {
+      res.send('respond with a resource');
+    });
+
+    module.exports = router;
+ 
+* Views(templates)
+  * `Response.render()` is used to render a specified template along with the values of named variables passed in an object, and then send the result as a response.
+  * In the example, `title` variable is inserted where specified in the template.
