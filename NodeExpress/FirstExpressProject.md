@@ -20,8 +20,7 @@
   * update the "script" in package.json by adding `"devstart": "nodemon ./bin/www"`.
   * `DEBUG=ExpressLibrary:* npm run devstart`
 
-* The generated project
-  * Directory structure
+* Directory structure
 #
     /ExpressLibrary
       app.js
@@ -64,3 +63,16 @@
         "nodemon": "^1.18.9"
       }
     }
+* www file: entry of the application
+* app.js
+  * This file creates an express application object, sets up the application with various setting and middleware, and then exports the app from the module. The code below shows just the parts of the file that create and export the app object:
+#
+    var express = require('express');
+    var app = express();
+    ...
+    module.exports = app;
+
+* details of app.js
+  * require() 
+    * `express, path, serve-favicon, morgan and cookie-parser`
+    * `routes/index and routes/users`
