@@ -1,4 +1,5 @@
 ## Express Start
+* learn from [MDN web docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Tutorial_local_library_website)
 
 > Install
 
@@ -248,3 +249,59 @@ var myinstance = new mymodel({name:'123'});
     mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
     
 * use `Async.series` to go through functions.
+
+> Routes and controllers 
+* Main things:
+  * Database(finished)
+  * Model(finished)
+  * Routes: route to forward the supported request(and any information encoded in request URLs) to the appropriate controller functions.
+  * Controller: give functions to get the requested data from the models, create an HTML page displaying the data, and return it to the user to view in the website.
+  * Views(templates): used by the controllers to render the data.
+* Two sections:
+  * Router primer: how to use the Express Router middleware
+  * Set up the Local Library routes
+* Routes primers
+  * route(Express) associates an HTTP verb(GET, POST, PUT, DELETE, etc), an URL path/pattern, and a function that is called to handle that pattern.
+* express.Router(), defining and using separate route modules.
+* wiki.js
+#
+    var express = require('express');
+    var router = express.Router();
+
+    // Home page route.
+    router.get('/', function (req, res) {
+      res.send('Wiki home page');
+    })
+
+    // About page route.
+    router.get('/about', function (req, res) {
+      res.send('About this wiki');
+    })
+    
+    router.post('/about', function (req, res) {
+      res.send('About this wiki');
+    })
+
+    module.exports = router;
+* app.js
+#
+    var wiki = require('./wiki.js');
+    // ...
+    app.use('/wiki', wiki);
+    
+* Route paths(regex)
+  * `?`: the endpoint must have 0 or 1 of the preceding charater
+  * `+`: the endpoint must have 1 or more of the preceding character
+  * `*`: the endpoint may have an arbitrary string where the * character is placed.
+  * `()`: grouping match on a set of characters to perform another operation on.(take the group as a character)
+  
+* Route parameters
+  * The named segments are prefiexd with `/:`
+  * It is req.params when use `app.get()`
+  
+* Routes needed for the LocalLibrary
+  * 
+
+  
+
+  
