@@ -151,6 +151,56 @@
     
 * Schema types(fields)
   * A schema can have an arbitrary number of fields - each one represents a field in the documents stored in MongoDB.
-  
-  
+#
+    var schema = new Schema(
+    {
+      name: String,
+      binary: Buffer,
+      living: Boolean,
+      updated: { type: Date, default: Date.now() },
+      age: { type: Number, min: 18, max: 65, required: true },
+      mixed: Schema.Types.Mixed,
+      _someId: Schema.Types.ObjectId,
+      array: [],
+      ofString: [String], // You can also have an array of each of the other types too.
+      nested: { stuff: { type: String, lowercase: true, trim: true } }
+    })
     
+* Using models
+var mymodel = mongoose.model('anyname',schema)
+var myinstance = new mymodel({name:'123'});
+
+> Working with related documents
+* Some exaples:
+#
+    var Story = mongoose.model('Story',storySchema);
+    var Author = mongoose.model('Author',authorSchema);
+
+    var bob = new Author({name:'Wentao'});
+    var AWK = new Author({name:'AWK'});
+    bob.save(function(err){
+      if (err) return handleError(err);
+      var story = new Story({
+        title: "W's story",
+        author: bob._id
+      });
+
+      story.save(function(err){
+        if(err) return handleError(err);
+      });
+    });
+
+
+    Story.findOne({title: "W's story"}).populate('author').exec(function(err,story){
+      if(err) return handleError(err);
+      console.log(story.author.name);
+    })
+    Story.find({author:AWK._id}).exec(function(err,stories){
+      if(err) return handleError(err);
+    })
+
+* Defining Local Library Schema
+  * author.js
+  * book.js
+  * bookinstance.js
+  * genre.js
