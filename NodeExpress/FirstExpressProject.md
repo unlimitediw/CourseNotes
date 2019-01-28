@@ -412,4 +412,13 @@ var myinstance = new mymodel({name:'123'});
         //result now equals 'done'
       });
   
-    
+> Template primer
+* A template is a text file defining the structure or layout of an output file, with placeholders used to represent where data will be inserted when the template is rendered.(in Express, templates are referred to as views)
+* View engine setup
+#
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'jade');
+* Template syntax
+  * the file maps the structure of a typical HTML file
+  * Element attributes are defined in parentheses after the associated element.
+* LocalLibrary base template
