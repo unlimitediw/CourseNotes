@@ -422,3 +422,11 @@ var myinstance = new mymodel({name:'123'});
   * the file maps the structure of a typical HTML file
   * Element attributes are defined in parentheses after the associated element.
 * LocalLibrary base template
+  * use js and css from bootstrap.
+  * remember to update the `/public/stylesheets/style.css`
+#
+    .sidebar-nav {
+        margin-top: 20px;
+        padding: 0;
+        list-style: none;
+    }
