@@ -300,8 +300,116 @@ var myinstance = new mymodel({name:'123'});
   * It is req.params when use `app.get()`
   
 * Routes needed for the LocalLibrary
-  * 
-
+  * `catalog/`
+  * `catalog/<objects>/`  list of all books, bookinstances, genres, authors
+  * `catalog/<object>/<id>` detail of a specific book, bookinstance...
+  * `catalog/<object>/create` the form to create a new book, bookinstance...
+  * `catalog/<object>/<id>/update` the form to update a specific book, bookinstance...
+  * `catalog/<object>/<id>/delete` the form to delete a specific book, bookinstance...
   
-
   
+* authorController.js (same as bookController, bookinstanceController and genreController)
+#
+    var Author = require('../models/author');
+
+    // Display list of all Authors.
+    exports.author_list = function(req, res) {
+        res.send('NOT IMPLEMENTED: Author list');
+    };
+
+    // Display detail page for a specific Author.
+    exports.author_detail = function(req, res) {
+        res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
+    };
+    ...
+
+* Create the catalog route module, catalog.js
+  * The routes are defined either using .get() and .post() methods on the router object. All the paths are defined using strings.
+
+#
+    var express = require('express');
+    var router = express.Router();
+
+    // Require controller modules.
+    var book_controller = require('../controllers/bookController');
+    var author_controller = require('../controllers/authorController');
+    var genre_controller = require('../controllers/genreController');
+    var book_instance_controller = require('../controllers/bookinstanceController');
+
+    /// BOOK ROUTES ///
+
+    // GET catalog home page.
+    router.get('/', book_controller.index);
+
+    // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
+    router.get('/book/create', book_controller.book_create_get);
+    ...
+ 
+* Generally speaking, to route you need:
+  * build your controller for get/post options
+  * build router in /routes to call the controller and define the router get/post function with defined path
+  * give a defined path in /routes/index.js
+  * update router to app.js and use it with app.use
+
+> Display Library Data: 12 sub topics
+
+> Asynchronous flow control using async
+
+* Methods:
+  * `async.parallel()` to execute any operations that must be performed in parallel.
+  * `async.series()` for when we need to ensure that asynchronous operations are performed in series.
+  * `async.waterfall()` in series, with each operation depending on the results of preceding operations.
+
+* Asynchronous operations in parallel
+   * The method `async.parallel()` is used to run multiple asynchronous operations in parallel
+   * the first argument to async.parallel() is a collection of asynchronous functions to run, each function is passed a callback(err, result) where result is optional.
+   * The optional second argument is a callback that will be run when all the functions in the first argument have completed. The callback is invoked with an error agrument and a result collection that contains the results of the individual asynchronous operations where the result collection is of the same type as the first argument. If any of the parallel functions reports an error the callback will be invoked earlier.
+#
+    async.parallel({
+      one: function(callback){...},
+      two: function(callback){...},
+      ...
+    },
+    //optional callback
+    function(err, results){
+      // 'results' is now equal to:{one:1, two:2 or some value,...}
+    });
+
+* Asynchronous operations in series(independent)
+  * the format is the same as parallel
+  * If the order is really important, you should pass an array instead of an object.
+#
+    async.series([
+      function(callback){
+        callback(null, 'one');
+      },
+      function(callback){
+        callback(null, 'two');
+      }
+    ],
+    //optional callback
+    function(err, results){
+    // results is now equal to ['one','two']
+    });
+
+* Dependent asynchronous operations in series, 
+  * `async.waterfall()` is used to run multiple asynchronous operations in sequence when each operation is dependent on the result of the previous operation.
+  * The callback invoked by each asynchronous function contains `null` for the first argument and the result in subsequent arguments. Each function in the series takes `the results arguments of the previous callback as the first parameters`, and then a callback function. When all operations are complete, a final callback is invoked with the result of the last operation. 
+#
+    async.waterfall([
+      function(callback){
+        callback(null, 'one', 'two');
+      },
+      function(arg1, arg2, callback){
+        //arg1 now equals 'one' and arg2 now equals 'two'
+        callback(null, 'three');
+      },
+      function(arg1,callback){
+        //arg1 now equals 'three'
+        callback(null,'done');
+      }],
+      function(err, result){
+        //result now equals 'done'
+      });
+  
+    
