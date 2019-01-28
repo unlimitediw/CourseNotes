@@ -1,3 +1,5 @@
+https://www.awseducate.com/student/s/jobdetails?awsjobId=a0x1N00000zcVkWQAU&sc_content=Other_ln_ot&sc_outcome=other&sc_medium=em_1218&mkt_tok=eyJpIjoiTUdGaE5Ea3dabVF3WkdJeCIsInQiOiJ6SDJaS01VRkVnQ0ltbG1qOGpxWnpZSFg1VHZncnUybEtSOXlSMXpqTksxeXNNNUdieHpZb2JGUlJNalZPdmU2NVlcLzdmYjNCenJqVHlVZkllakxJY2xsd2srU2ZUbHRIQ0ZzRjY1V1hFb2h5aVJzRGcxWExLNlZXcnYxaUxCa3oifQ%3D%3D&sc_channel=em&sc_detail=awseducatewelcomeemail2&sc_country=mult&trk=em_1218&sc_campaign=GLOBAL_LN_aws-educate-welcome-series_20180312&sc_geo=mult
+* location: Delaware
 ### This role requires a wide variety of strengths and capabilities, including: 
 * BS/BA degree or equivalent experience
 * Advanced knowledge of application, data and infrastructure architecture disciplines
