@@ -172,6 +172,7 @@ var myinstance = new mymodel({name:'123'});
 
 > Working with related documents
 * Some exaples:
+* Atthention: mongoose.model first arg must be same as the model you export.
 #
     var Story = mongoose.model('Story',storySchema);
     var Author = mongoose.model('Author',authorSchema);
@@ -204,3 +205,46 @@ var myinstance = new mymodel({name:'123'});
   * book.js
   * bookinstance.js
   * genre.js
+
+* Author model (others are same)
+#
+    var mongoose = require('mongoose');
+
+    var Schema = mongoose.Schema;
+
+    var AuthorSchema = new Schema({
+      first_name: {type: String, required:true,max:100},
+      family_name: {type:String, required:true,max:100},
+      date_of_birth: {type:Date},
+      date_of_death:{type:Date}
+    });
+
+    //Virtual for author's full name
+    AuthorSchema.virtual('name').get(function(){
+      return this.family_name + ', ' + this.first_name;
+    });
+
+    AuthorSchema.virtual('lifespan').get(function(){
+      try{
+        return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
+      }catch(err){
+          console.log(err.message);
+      }
+    });
+
+    AuthorSchema.virtual('url').get(function(){
+      return '/catalog/author/' + this._id;
+    });
+
+    module.exports = mongoose.model('Author',AuthorSchema);
+    
+* use populatedb.js to link the mongoose web db. (remeber `npm install async`)
+#
+    var mongoose = require('mongoose');
+    var mongoDB = userArgs[0];
+    mongoose.connect(mongoDB);
+    mongoose.Promise = global.Promise;
+    var db = mongoose.connection;
+    mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+    
+* use `Async.series` to go through functions.
