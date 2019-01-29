@@ -430,3 +430,207 @@ var myinstance = new mymodel({name:'123'});
         padding: 0;
         list-style: none;
     }
+
+> Home page
+
+* Update controller function to fetch "counts" of records from database and create a view to render the page.
+* Use `countDocuments()` method to get the number of instances of each model.
+#
+    var Book = require('../models/book');
+    var Author = require('../models/author');
+    var Genre = require('../models/genre');
+    var BookInstance = require('../models/bookinstance');
+
+    var async = require('async');
+
+    exports.index = function(req, res) {   
+
+        async.parallel({
+            book_count: function(callback) {
+                Book.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
+            },
+            book_instance_count: function(callback) {
+                BookInstance.countDocuments({}, callback);
+            },
+            book_instance_available_count: function(callback) {
+                BookInstance.countDocuments({status:'Available'}, callback);
+            },
+            author_count: function(callback) {
+                Author.countDocuments({}, callback);
+            },
+            genre_count: function(callback) {
+                Genre.countDocuments({}, callback);
+            }
+        }, function(err, results) {
+            res.render('index', { title: 'Local Library Home', error: err, data: results });
+        });
+    };
+* The final callback is invoked with the counts in the results parameter(记得在app.js连接服务器）
+
+> List Page
+* bookController.js
+#
+    // Display list of all Books.
+    exports.book_list = function(req, res, next) {
+
+      Book.find({}, 'title author')
+        .populate('author')
+        .exec(function (err, list_books) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('book_list', { title: 'Book List', book_list: list_books });
+        });
+
+    };
+* book_list.jade
+#
+    extends layout
+
+    block content
+      h1= title
+
+      ul
+        each book in book_list
+          li 
+            a(href=book.url) #{book.title} 
+            |  (#{book.author.name})
+
+        else
+          li There are no books
+* The bookinstance, author, genre are the same
+
+> Detail Page
+* genreController.js
+#
+    // Display detail page for a specific Genre.
+    exports.genre_detail = function(req, res, next) {
+
+        async.parallel({
+            genre: function(callback) {
+                Genre.findById(req.params.id)
+                  .exec(callback);
+            },
+
+            genre_books: function(callback) {
+              Book.find({ 'genre': req.params.id })
+              .exec(callback);
+            },
+
+        }, function(err, results) {
+            if (err) { return next(err); }
+            if (results.genre==null) { // No results.
+                var err = new Error('Genre not found');
+                err.status = 404;
+                return next(err);
+            }
+            // Successful, so render
+            res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books } );
+        });
+
+    };
+* genre_detail.jade
+#
+    extends layout
+    
+    block content
+
+      h1 Genre: #{genre.name}
+
+      div(style='margin-left:20px;margin-top:20px')
+
+        h4 Books
+
+        dl
+          each book in genre_books
+            dt 
+              a(href=book.url) #{book.title}
+            dd #{book.summary}
+
+          else
+            p This genre has no books
+    T
+
+* Others are basically same.
+
+> Working with Forms
+* Form format
+#
+    <form action="/team_name_url/" method="post">
+      <label for="team_name">Enter name:</label>
+      <input id="team_name" type = "text" name="name_field" val="Default name for team.">
+      <input type="submit" value="OK">
+    </form>
+    
+* Genre Form
+* Update the genre_create_get in genreController
+#
+    exports.genre_create_get = function(req, res, next) {     
+      res.render('genre_form', { title: 'Create Genre' });
+    };
+* Remember to require body, validationResult and sanitizeBody
+#
+    const { body,validationResult } = require('express-validator/check');
+    const { sanitizeBody } = require('express-validator/filter');
+* Update genre_create_post, post route, genreController.js
+#
+    exports.genre_create_post = [
+      //Validate that the name field is not empty
+      body('name','Genre name required').isLength({min:1}).trim(),
+
+      //Sanitize the name field
+      sanitizeBody('name').trim().escape(),
+
+      //Process request after validation and sanitization
+      //Arrow functions are a short syntax basically same sa function(){}
+      (req,res,next) => {
+        //Extract the validation errors from a request
+        const errors=validationResult(req);
+
+        //Create a genre object with escaped and trimmed data
+        var genre = new Genre(
+        {
+          name: req.body.name
+        });
+
+        if(!errors.isEmpty()){
+          //There are errors. Render the form again with sanitized values/error messages.
+          res.render('genre_form',{title:'Create Genre',genre:genre, errors: errors.array()});
+          return;
+        }
+        else{
+          //Data from form is valid
+          //Check if Genre with same name already exists
+          Genre.findOne({'name': req.body.name})
+            .exec(function(err,found_genre){
+              if(err){return next(err);}
+              if(found_genre){
+                res.redirect(found_genre.url);
+              }
+              else{
+                genre.save(function(err){
+                  if(err){return next(err);}
+                  //Genre saved and redirect to genre detail page.
+                  res.redirect(genre.url);
+                });
+              }
+            })
+        }
+      }
+    ];
+* genre_form.jade
+#
+    extends layout
+
+    block content
+      h1 #{title}
+
+      form(method='POST' action='')
+        div.form-group
+          label(for='name') Genre:
+          input#name.form-control(type='text', placeholder='Fantasy, Poetry etc.' name='name' value=(undefined===genre ? '' : genre.name))
+        button.btn.btn-primary(type='submit') Submit
+
+      if errors 
+       ul
+        for error in errors
+         li!= error.msg
