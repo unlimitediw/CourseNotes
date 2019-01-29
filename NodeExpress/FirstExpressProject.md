@@ -636,3 +636,97 @@ var myinstance = new mymodel({name:'123'});
         for error in errors
          li!= error.msg
 * Author form, book form and others are basically the same.
+
+> Delete Author form
+* authorController - get route
+* req.params.id - the id of the Author instance to be deleted from the URL params, 尾号
+#
+    // Display Author delete form on GET.
+    exports.author_delete_get = function(req, res, next) {
+
+        async.parallel({
+            author: function(callback) {
+                Author.findById(req.params.id).exec(callback)
+            },
+            authors_books: function(callback) {
+              Book.find({ 'author': req.params.id }).exec(callback)
+            },
+        }, function(err, results) {
+            if (err) { return next(err); }
+            if (results.author==null) { // No results.
+                res.redirect('/catalog/authors');
+            }
+            // Successful, so render.
+            res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books             } );
+        });
+
+    };
+* authorController - post route
+#
+    // Handle Author delete on POST.
+    exports.author_delete_post = function(req, res, next) {
+
+        async.parallel({
+            author: function(callback) {
+              Author.findById(req.body.authorid).exec(callback)
+            },
+            authors_books: function(callback) {
+              Book.find({ 'author': req.body.authorid }).exec(callback)
+            },
+        }, function(err, results) {
+            if (err) { return next(err); }
+            // Success
+            if (results.authors_books.length > 0) {
+                // Author has books. Render in same way as for GET route.
+                res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books } );
+                return;
+            }
+            else {
+                // Author has no books. Delete object and redirect to the list of authors.
+                Author.findByIdAndRemove(req.body.authorid, function deleteAuthor(err) {
+                    if (err) { return next(err); }
+                    // Success - go to author list
+                    res.redirect('/catalog/authors')
+                })
+            }
+        });
+    };
+* author_delete.jade
+#
+    extends layout
+
+    block content
+      h1 #{title}: #{author.name}
+      p= author.lifespan
+
+      if author_books.length
+
+        p #[strong Delete the following books before attempting to delete this author.]
+
+        div(style='margin-left:20px;margin-top:20px')
+
+          h4 Books
+
+          dl
+          each book in author_books
+            dt 
+              a(href=book.url) #{book.title}
+            dd #{book.summary}
+
+      else
+        p Do you really want to delete this Author?
+
+        form(method='POST' action='')
+          div.form-group
+            input#authorid.form-control(type='hidden',name='authorid', required='true', value=author._id )
+
+          button.btn.btn-primary(type='submit') Delete
+* add this to author_detail.jade
+#
+    hr
+    p
+      a(href=author.url+'/delete') Delete author
+* Others are the same
+
+* Update is basically the same.
+
