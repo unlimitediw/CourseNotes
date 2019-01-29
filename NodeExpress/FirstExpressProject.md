@@ -563,6 +563,7 @@ var myinstance = new mymodel({name:'123'});
     
 * Genre Form
 * Update the genre_create_get in genreController
+* Get这里就是去views那里拿jade格式了，之前已经设置好路径了
 #
     exports.genre_create_get = function(req, res, next) {     
       res.render('genre_form', { title: 'Create Genre' });
@@ -634,3 +635,4 @@ var myinstance = new mymodel({name:'123'});
        ul
         for error in errors
          li!= error.msg
+* Author form, book form and others are basically the same.
